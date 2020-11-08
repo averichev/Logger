@@ -1,7 +1,5 @@
-using System;
 using System.Threading;
 using System.Threading.Tasks;
-using Logger.Application.LoggerType;
 using Microsoft.Extensions.Hosting;
 
 namespace Logger.Application.Workers
@@ -14,15 +12,8 @@ namespace Logger.Application.Workers
         {
             while (!stoppingToken.IsCancellationRequested)
             {
-                
                 await Task.Delay(Delay, stoppingToken);
             }
-        }
-
-        private static void Handler(Types type)
-        {
-            Console.WriteLine("Handler !!!!!");
-            Console.WriteLine(type);
         }
     }
 }
