@@ -25,7 +25,6 @@ namespace Logger.Application.Services
             }
 
             Type = newType;
-            Console.WriteLine("Invoke!!");
             TypeChangedEvent?.Invoke(this, new LoggerTypeChangeEventArgs(newType));
         }
         
