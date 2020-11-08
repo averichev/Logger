@@ -23,7 +23,5 @@ namespace Logger.Application.Workers
                 await Task.Delay(Delay, stoppingToken);
             }
         }
-
-        
     }
 }
