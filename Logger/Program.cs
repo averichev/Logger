@@ -17,11 +17,9 @@ namespace Logger
             return Host.CreateDefaultBuilder(args)
                 .ConfigureServices((hostContext, services) =>
                     {
-                        var loggerTypeReader = new LoggerTypeReader();
-                        var loggerWriter = new LoggerWriter();
-                        loggerTypeReader.TypeChangedEvent += loggerWriter.OnTypeChanged;
-                        services.AddSingleton<ILoggerTypeReader>(loggerTypeReader);
-                        services.AddSingleton<ILoggerWriter>(loggerWriter);
+                        var factory = new ServiceFactory().Build();
+                        services.AddSingleton<ILoggerTypeReader>(factory.Reader);
+                        services.AddSingleton<ILoggerWriter>(factory.Writer);
                         services.AddHostedService<LoggerTypeReaderWorker>();
                         services.AddHostedService<LogWriterWorker>();
                     }
