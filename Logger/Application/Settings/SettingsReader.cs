@@ -7,16 +7,16 @@ namespace Logger.Application.Settings
     {
         private readonly KeyDataCollection _settings;
         
-        public SettingsReader()
+        public SettingsReader(KeyDataCollection settings)
         {
-            var parser = new FileIniDataParser();
-            var data = parser.ReadFile("LoggerServiceConfiguration.ini");
-            _settings = data.Sections["Logger"];
+            _settings = settings;
         }
 
         public string Type()
         {
-            return _settings.GetKeyData("LoggerType").Value;
+            var data = _settings.GetKeyData("LoggerType");
+            var type = data.Value.Trim('"');
+            return type;
         }
         public string ConnectionString()
         {

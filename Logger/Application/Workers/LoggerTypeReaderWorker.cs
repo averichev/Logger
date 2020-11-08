@@ -1,44 +1,29 @@
 using System.Threading;
 using System.Threading.Tasks;
-using Logger.Application.LoggerType;
-using Logger.Application.Settings;
+using Logger.Application.Services;
 using Microsoft.Extensions.Hosting;
 
 namespace Logger.Application.Workers
 {
     public class LoggerTypeReaderWorker : BackgroundService
     {
-        private readonly SettingsReader _settingsReader;
         private const int Delay = 10000;
-        private Types Type { get; set; }
-        public delegate void LoggerTypeHandler(Types type);
-        public event LoggerTypeHandler Notify;     
+        private readonly ILoggerTypeReader _reader;
 
-        public LoggerTypeReaderWorker(SettingsReader settingsReader)
+        public LoggerTypeReaderWorker(ILoggerTypeReader reader)
         {
-            _settingsReader = settingsReader;
+            _reader = reader;
         }
 
         protected override async Task ExecuteAsync(CancellationToken stoppingToken)
         {
             while (!stoppingToken.IsCancellationRequested)
             {
-                SetType();
+                _reader.Read();
                 await Task.Delay(Delay, stoppingToken);
             }
         }
 
-        private void SetType()
-        {
-            var currentType = Type;
-            var newType = TypeBuilder.Build(_settingsReader.Type());
-            if (currentType == Type)
-            {
-                return;
-            }
-
-            Type = newType;
-            Notify?.Invoke(Type);
-        }
+        
     }
 }
