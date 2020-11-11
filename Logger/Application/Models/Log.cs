@@ -1,8 +1,8 @@
 using System;
 
-namespace Logger.Infrastructure.Models
+namespace Logger.Application.Models
 {
-    public class Log
+    public class Log : ILog
     {
         public Log(DateTime time, long bytes)
         {

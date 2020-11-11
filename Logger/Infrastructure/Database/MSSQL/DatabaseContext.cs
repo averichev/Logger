@@ -13,6 +13,11 @@ namespace Logger.Infrastructure.Database.MSSQL
         {
         }
 
-        public DbSet<Log> Logs { get; set; }
+        public DbSet<Log> Log { get; set; }
+
+        protected override void OnModelCreating(ModelBuilder builder)
+        {
+            builder.Entity<Log>().HasKey(c => new {c.Time, c.Bytes});
+        }
     }
 }

@@ -1,5 +1,6 @@
 using Logger.Application.LoggerType;
 using Logger.Application.Models;
+using Logger.Infrastructure;
 
 namespace Logger.Application.Services
 {
@@ -14,7 +15,8 @@ namespace Logger.Application.Services
 
         public void Write(ILog log)
         {
-            
+            var repository = RepositoryWriterSelector.Select(_loggerType);
+            repository.Add(log);
         }
     }
 }

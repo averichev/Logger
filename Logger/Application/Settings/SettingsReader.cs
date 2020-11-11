@@ -20,7 +20,7 @@ namespace Logger.Application.Settings
         }
         public string ConnectionString()
         {
-            return _settings.GetKeyData("ConnectionString").Value;
+            return _settings.GetKeyData("ConnectionString").Value.Trim('"');
         }
     }
 }
